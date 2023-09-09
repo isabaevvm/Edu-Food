@@ -163,24 +163,6 @@
         </section>
     </div>
     <script>
-        function updateSort() {
-            const sortSelect = document.getElementById("sortSelect");
-            const selectedSort = sortSelect.value;
-
-            const currentUrl = window.location.href;
-
-            const urlParts = currentUrl.split("?");
-
-            let baseUrl = urlParts[0];
-
-            const queryParams = new URLSearchParams(urlParts[1]);
-
-            queryParams.set("sort", selectedSort);
-
-            const newUrl = baseUrl + "?" + queryParams.toString();
-
-            window.location.href = newUrl;
-        }
 
         function readUser() {
             let userAsJson = localStorage.getItem('user')
@@ -188,111 +170,11 @@
         }
 
         let user = readUser()
-        function hamDropdown() {
-            document.querySelector(".noidung_dropdown").classList.toggle("hienThi");
-        }
-
-        function hamDropdown() {
-            document.querySelector(".noidung_dropdown").classList.toggle("hienThi");
-        }
 
         function goToPage(page) {
-            window.location.href = "/vacancies?page=" + page + "&size=5";
+            window.location.href = "/restaurants?page=" + page + "&size=5";
         }
 
-        document.querySelectorAll(".openModalButton").forEach(function(button) {
-            button.addEventListener("click", function() {
-                fetch("/users/check-auth")
-                    .then(function(response) {
-                        if (!response.ok) {
-                            window.location.href = "/login";
-                        }
-                    })
-                const modalContent = document.querySelector(".modal-content");
-                const resumeSelector = modalContent.querySelector("#resumeSelector");
-                const messageTextarea = modalContent.querySelector("#messageTextarea");
-                const vacancyId = button.dataset.vacancyId;
-
-                resumeSelector.innerHTML = '<option value="" disabled selected>Выберите резюме</option>';
-                updateSelectOptions();
-                const sendMessageButton = modalContent.querySelector("#sendMessageButton");
-                sendMessageButton.addEventListener("click", function() {
-                    const selectedValue = resumeSelector.value;
-                    const message = messageTextarea.value;
-
-                    let csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-                    let csrfToken = document.querySelector('meta[name="_csrf_token"]').getAttribute('content');
-
-                    console.log("Выбранное значение:", selectedValue);
-                    console.log("Сообщение:", message);
-
-                    let headers = new Headers()
-                    headers.set('Authorization', 'Basic ' + btoa(user.username + ':' + user.password))
-                    headers.set('Content-Type', 'application/json');
-                    headers.set(csrfHeader, csrfToken);
-
-                    const dataToSend = {
-                        vacancyId: vacancyId,
-                        resumeId: selectedValue,
-                        message: message
-                    };
-                    console.log(dataToSend)
-
-                    fetch("/api/responses/", {
-                        method: "POST",
-                        headers: headers,
-                        body: JSON.stringify(dataToSend)
-                    })
-                        .then(response => {
-                            window.location.href = "/direct"
-                        })
-
-
-                });
-                document.getElementById("myModal").style.display = "block";
-            });
-        });
-
-        document.getElementById("closeModal").addEventListener("click", function() {
-            document.getElementById("myModal").style.display = "none";
-        });
-
-        window.addEventListener("click", function(event) {
-            if (event.target == document.getElementById("myModal")) {
-                document.getElementById("myModal").style.display = "none";
-            }
-        });
-
-        const selectElement = document.getElementById("resumeSelector");
-
-        let csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-        let csrfToken = document.querySelector('meta[name="_csrf_token"]').getAttribute('content');
-
-        async function updateSelectOptions() {
-            try {
-                let headers = new Headers()
-                headers.set('Authorization', 'Basic ' + btoa(user.username + ':' + user.password))
-                headers.set('Content-Type', 'application/json');
-                headers.set(csrfHeader, csrfToken);
-
-                const response = await fetch("http://localhost:8989/api/resumes/get/title", {
-                    method: "GET",
-                    headers: headers
-                });
-                const data = await response.json();
-                while (selectElement.options.length > 1) {
-                    selectElement.remove(1);
-                }
-                data.forEach(item => {
-                    const option = document.createElement("option");
-                    option.value = item.id;
-                    option.textContent = item.titleResume;
-                    selectElement.appendChild(option);
-                });
-            } catch (error) {
-                console.error("Произошла ошибка при получении данных:", error);
-            }
-        }
 
         const searchInput = document.getElementById("searchInput");
         const searchResults = document.getElementById("searchResults");
@@ -301,7 +183,7 @@
             const query = searchInput.value.trim();
 
             if (query !== "") {
-                fetch(`http://localhost:8989/api/vacanciess/search/` + query)
+                fetch(`http://localhost:8989/api/restaurants/search/` + query)
                     .then(response => response.json())
                     .then(data => {
                         displaySearchResults(data);
@@ -322,13 +204,13 @@
                 return;
             }
 
-            results.forEach(vacancy => {
+            results.forEach(restaurant => {
                 const resultItem = document.createElement("div");
                 const resultUrl = document.createElement("a")
 
                 resultItem.classList.add("search-result");
-                resultUrl.textContent = vacancy.name;
-                resultUrl.href = "/vacancies/" + vacancy.id
+                resultUrl.textContent = restaurant.name;
+                resultUrl.href = "/restaurants/" + restaurant.id
 
                 resultItem.appendChild(resultUrl)
                 searchResults.appendChild(resultItem);

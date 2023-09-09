@@ -8,10 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +19,23 @@ import java.util.List;
 public class RestaurantService {
     private final RestaurantRepository repository;
 
-    public Page<RestaurantDto> getAllRestaurants(int page, int size){
+    public Page<RestaurantDto> getAllRestaurants(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Restaurant> restaurants = repository.findAll(pageable);
 
         return restaurants.map(this::makeDto);
     }
 
-    private RestaurantDto makeDto(Restaurant r){
+    private RestaurantDto makeDto(Restaurant r) {
         return RestaurantDto.builder()
                 .id(r.getId())
                 .name(r.getName())
                 .build();
+    }
+
+    public List<RestaurantDto> searchRestaurant(String search) {
+        List<Restaurant> restaurants = repository.searchByNameContainingIgnoreCase(search);
+
+        return restaurants.stream().map(this::makeDto).collect(Collectors.toList());
     }
 }
