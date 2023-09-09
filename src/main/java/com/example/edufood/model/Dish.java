@@ -10,20 +10,13 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Dishes")
+@Table(name = "dishes")
 public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dish_id")
-    private Long dishId;
-
-    @Column(name = "name")
+    private Long id;
     private String name;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "price")
     private Double price;
 
     @ManyToOne

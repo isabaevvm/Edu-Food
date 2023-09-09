@@ -11,17 +11,14 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
     @Column(name = "email", unique = true)
     private String email;
-
-    @Column(name = "password")
     private String password;
 
     @OneToMany(mappedBy = "user")

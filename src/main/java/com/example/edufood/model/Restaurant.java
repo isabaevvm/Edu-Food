@@ -11,14 +11,11 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Restaurants")
+@Table(name = "restaurants")
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_id")
-    private Long restaurantId;
-
-    @Column(name = "name")
+    private Long id;
     private String name;
 
     @OneToMany(mappedBy = "restaurant")

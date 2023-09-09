@@ -10,16 +10,12 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "OrderItems")
+@Table(name = "orderItems")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_item_id")
-    private Long orderItemId;
-
-    @Column(name = "quantity")
+    private Long id;
     private int quantity;
-
 
     @ManyToOne
     @JoinColumn(name = "order_id")
