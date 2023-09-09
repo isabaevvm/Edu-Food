@@ -126,65 +126,22 @@
     </style>
     <div class="container shadow-lg mt-5">
         <div class="dropdown">
-            <div class="col mt-3">
-                <button class="btn btn-update" onclick="hamDropdown()" style="background-color: #057ae0; margin-left: 15px">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
-                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                    Фильтр
-                </button>
-            </div>
-            <div class="sort-container">
-                <label for="sortSelect">Сортировать по:</label>
-                <select id="sortSelect" onchange="updateSort()">
-                    <option value="dateCreated">Дате публикации</option>
-                    <option value="responses">Количеству откликов</option>
-                </select>
-            </div>
             <div>
                 <input type="text" id="searchInput" placeholder="Поиск вакансий...">
             </div>
             <div id="searchResults">
                 <!-- Результаты поиска будут здесь -->
             </div>
-            <div class="noidung_dropdown">
-                <#list categories as category>
-                    <a href="/vacancies/search/category/${category.id}">${category.categoryName}</a>
-                </#list>
-            </div>
         </div>
         <section class="mb-5">
-            <#assign pageSize = vacancies.getTotalPages()>
-            <#if vacancies.getContent()?has_content>
-            <#list vacancies.getContent() as vacancy>
+            <#assign pageSize = restaurants.getTotalPages()>
+            <#if restaurants.getContent()?has_content>
+            <#list restaurants.getContent() as restaurant>
                 <div class="row">
                     <div class="col-md-12 mt-3">
                         <div class="card shadow">
                             <div class="card-body">
-                                <a href="/vacancies/${vacancy.id}" class="card-title">${vacancy.name}</a>
-                                <p class="card-text resume-date">${vacancy.salary}</p>
-                                <p>Опыт работы от: ${vacancy.experienceFrom} до: ${vacancy.experienceTo} год</p>
-                                <div class="button-group">
-                                    <a href="#" class="btn btn-update openModalButton" id="openModalButton" data-vacancy-id="${vacancy.id}">Откликнуться</a>
-                                    <a href="/vacancies/${vacancy.id}">
-                                        <button type="button" class="btn btn-edit">Больше узнать</button>
-                                    </a>
-                                    <div id="myModal" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" id="closeModal">&times;</span>
-                                            <p>Выберите резюме:</p>
-                                            <select id="resumeSelector" class="form-select" name="roleId" required>
-                                                <option value="" disabled selected>Выберите резюме</option>
-                                            </select>
-
-                                            <p>Введите сообщение:</p>
-                                            <textarea id="messageTextarea" rows="4" cols="50"></textarea>
-
-                                            <button id="sendMessageButton">Отправить</button>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <a href="/vacancies/${restaurant.id}" class="card-title">${restaurant.name}</a>
                             </div>
                         </div>
                     </div>
@@ -195,7 +152,7 @@
             </#if>
             <div class="pagination-container">
                 <#if 1 < pageSize>
-                    <#list 0..vacancies.totalPages - 1 as pageIndex>
+                    <#list 0..restaurants.totalPages - 1 as pageIndex>
                         <button class="page-button" onclick="goToPage(${pageIndex})">${pageIndex + 1}</button>
                     </#list>
                 </#if>
