@@ -94,12 +94,12 @@
     <#assign known = SPRING_SECURITY_CONTEXT??>
     <nav class="nav text-center">
         <a href="/" class="nav-link"><i class="fas fa-home"></i> Главная</a>
+        <a href="/cart" class="nav-link"><i class="fas fa-shopping-cart"></i> Корзина</a>
         <#if known>
-            <a href="/basket" class="nav-link"><i class="fas fa-shopping-cart"></i> Корзина</a>
             <#if _csrf??>
                 <form action="/logout" method="post">
                     <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
-                           value="${(_csrf.token)!'--no-token--'}"/>
+                    value="${(_csrf.token)!'--no-token--'}"/>
                     <button type="submit" class="nav-link" id="logout"><i class="fas fa-sign-out-alt"></i> Выход</button>
                 </form>
             <#else>
