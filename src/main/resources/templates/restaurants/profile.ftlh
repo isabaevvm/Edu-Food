@@ -134,26 +134,28 @@
                 </div>
             </div>
             <div class="row mt-5">
-                    <#if dishes?has_content>
-                        <#assign pageSize = dishes.getTotalPages()>
-                        <#list dishes.getContent() as dish>
-                            <div class="col-md-12">
-                                <div class="card shadow">
-                                    <div class="card-body">
-                                        <a href="/resume/${dish.id}" class="card-title">${dish.name}</a>
-                                        <p class="card-text resume-date">Дата обновления: ${dish.description}</p>
-                                    </div>
+                <#if dishes?has_content>
+                    <#assign pageSize = dishes.getTotalPages()>
+                    <#list dishes.getContent() as dish>
+                        <div class="col-md-12">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <p href="/resume/${dish.name}" class="card-title">${dish.name}</p>
+                                    <p class="card-text resume-date">${dish.description}</p>
+                                    <p class="card-text resume-date" style="color: #057ae0">${dish.price}</p>
+                                    <button class="btn btn-update" onclick="addToCart(${dish.id}, '${dish.name}', ${dish.price})">В корзину</button>
                                 </div>
                             </div>
-                        </#list>
-                        <div class="pagination-container">
-                            <#if 1 < pageSize>
-                                <#list 0..dishes.totalPages - 1 as pageIndex>
-                                    <button class="page-button" onclick="goToPage(${pageIndex})">${pageIndex + 1}</button>
-                                </#list>
-                            </#if>
                         </div>
-                    </#if>
+                    </#list>
+                    <div class="pagination-container">
+                        <#if 1 < pageSize>
+                            <#list 0..dishes.totalPages - 1 as pageIndex>
+                                <button class="page-button" onclick="goToPage(${pageIndex})">${pageIndex + 1}</button>
+                            </#list>
+                        </#if>
+                    </div>
+                </#if>
             </div>
         </section>
     </div>
@@ -186,5 +188,42 @@
 
             window.location.href = newUrl;
         }
+
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('cart');
+            return savedCart ? JSON.parse(savedCart) : [];
+        }
+
+        function saveCartToLocalStorage(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        let cart = loadCartFromLocalStorage();
+
+        if (!cart) {
+            cart = [];
+            saveCartToLocalStorage(cart);
+        }
+
+        function addToCart(dishId, dishName, dishPrice) {
+            const existingCartItem = cart.find(item => item.dishId === dishId);
+
+            if (existingCartItem) {
+                existingCartItem.quantity++;
+            } else {
+                const newCartItem = {
+                    dishId: dishId,
+                    dishName: dishName,
+                    price: dishPrice,
+                    quantity: 1,
+                };
+                cart.push(newCartItem);
+            }
+
+            saveCartToLocalStorage(cart);
+
+            // Тут можно добавить обновление отображения корзины на странице
+        }
+
     </script>
 </@main.layout>

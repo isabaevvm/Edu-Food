@@ -141,7 +141,7 @@
                     <div class="col-md-12 mt-3">
                         <div class="card shadow">
                             <div class="card-body">
-                                <a href="/vacancies/${restaurant.name}" class="card-title">${restaurant.name}</a>
+                                <a href="/${restaurant.name}" class="card-title">${restaurant.name}</a>
                             </div>
                         </div>
                     </div>

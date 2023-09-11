@@ -95,10 +95,7 @@
     <nav class="nav text-center">
         <a href="/" class="nav-link"><i class="fas fa-home"></i> Главная</a>
         <#if known>
-            <a href="/profile" class="nav-link"><i class="fas fa-user"></i> Профиль</a>
-            <a href="/direct" class="nav-link"><i class="fas fa-envelope"></i> Чаты</a>
-            <a href="/resume" class="nav-link"><i class="fas fa-user"></i> Резюме</a>
-            <a href="/companies" class="nav-link"><i class="fas fa-building"></i> Компании</a>
+            <a href="/basket" class="nav-link"><i class="fas fa-shopping-cart"></i> Корзина</a>
             <#if _csrf??>
                 <form action="/logout" method="post">
                     <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
