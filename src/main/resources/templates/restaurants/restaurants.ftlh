@@ -1,4 +1,4 @@
-<#import "layout.ftlh" as main>
+<#import "../layout.ftlh" as main>
 <@main.layout>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta name="_csrf_token" content="${_csrf.token}"/>
@@ -141,7 +141,7 @@
                     <div class="col-md-12 mt-3">
                         <div class="card shadow">
                             <div class="card-body">
-                                <a href="/vacancies/${restaurant.id}" class="card-title">${restaurant.name}</a>
+                                <a href="/vacancies/${restaurant.name}" class="card-title">${restaurant.name}</a>
                             </div>
                         </div>
                     </div>

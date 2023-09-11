@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +38,9 @@ public class RestaurantService {
         List<Restaurant> restaurants = repository.searchByNameContainingIgnoreCase(search);
 
         return restaurants.stream().map(this::makeDto).collect(Collectors.toList());
+    }
+
+    public RestaurantDto getRestaurantByName(String name) {
+        return makeDto(repository.findByName(name).orElseThrow(() -> new NoSuchElementException("restaurant not found")));
     }
 }
