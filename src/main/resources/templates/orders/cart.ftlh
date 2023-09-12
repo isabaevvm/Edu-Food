@@ -1,5 +1,7 @@
 <#import "../layout.ftlh" as main>
 <@main.layout>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="_csrf_token" content="${_csrf.token}"/>
     <style>
         .total-section {
             display: flex;
@@ -139,10 +141,14 @@
             };
 
             const url = '/api/order';
+            let csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+            let csrfToken = document.querySelector('meta[name="_csrf_token"]').getAttribute('content');
+
 
             let headers = new Headers()
             headers.set('Authorization', 'Basic ' + btoa(user.username + ':' + user.password))
             headers.set('Content-Type', 'application/json');
+            headers.set(csrfHeader, csrfToken);
 
             const requestOptions = {
                 method: 'POST',

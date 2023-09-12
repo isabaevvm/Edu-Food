@@ -78,7 +78,7 @@
                         <div class="col-md-12">
                             <div class="card shadow">
                                 <div class="card-body">
-                                    <p class="card-title">${order.totalPrice}</p>
+                                    <p class="card-title">Итоговая сумма заказа: ${order.totalPrice}</p>
                                     <#assign dateString = order.orderDate>
                                     <#assign dateObject = dateString>
 
