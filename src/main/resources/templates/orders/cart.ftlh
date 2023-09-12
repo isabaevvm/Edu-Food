@@ -72,24 +72,25 @@
         function renderCartItems() {
             const cartItemsElement = document.getElementById('cartItems');
 
-            if (cart.length === 0) {
+            if (cart.items.length === 0) {
                 cartItemsElement.innerHTML = '<tr><td colspan="4">Корзина пуста</td></tr>';
             } else {
-                cartItemsElement.innerHTML = cart.map(item =>  `
-                    <tr>
-                        <td>` + item.dishName + `</td>
-                        <td>` + item.restaurant + `</td>
-                        <td>` + item.price + `</td>
-                        <td>` + item.quantity + `</td>
-                        <td>` + item.price * item.quantity + `</td>
-                    </tr>
-                `).join('');
+                cartItemsElement.innerHTML = cart.items.map(item =>  `
+            <tr>
+                <td>` + item.dishName + `</td>
+                <td>` + item.restaurant + `</td>
+                <td>` + item.price + `</td>
+                <td>` + item.quantity + `</td>
+                <td>` + item.price * item.quantity + `</td>
+            </tr>
+        `).join('');
             }
 
             const totalPriceElement = document.getElementById('totalPrice');
-            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            const total = cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
             totalPriceElement.textContent = `Итого: ` + total + ` руб.`;
         }
+
 
         renderCartItems();
 

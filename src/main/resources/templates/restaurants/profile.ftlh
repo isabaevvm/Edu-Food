@@ -217,7 +217,7 @@
 
         function loadCartFromLocalStorage() {
             const savedCart = localStorage.getItem('cart');
-            return savedCart ? JSON.parse(savedCart) : [];
+            return savedCart ? JSON.parse(savedCart) : { items: [], totalPrice: 0 };
         }
 
         function saveCartToLocalStorage(cart) {
@@ -226,14 +226,13 @@
 
         let cartData = loadCartFromLocalStorage();
 
-
         if (!cartData) {
-            cartData = [];
+            cartData = { items: [], totalPrice: 0 };
             saveCartToLocalStorage(cartData);
         }
 
         function addToCart(dishId, restaurant, dishName, dishPrice) {
-            const existingCartItem = cartData.find(item => item.dishId === dishId);
+            const existingCartItem = cartData.items.find(item => item.dishId === dishId);
 
             if (existingCartItem) {
                 existingCartItem.quantity++;
@@ -245,7 +244,7 @@
                     price: parseFloat(dishPrice),
                     quantity: 1,
                 };
-                cartData.push(newCartItem);
+                cartData.items.push(newCartItem);
             }
 
             saveCartToLocalStorage(cartData);
@@ -255,11 +254,11 @@
         }
 
         function updateCartItemCount() {
-            const cartFromLocalStorage = loadCartFromLocalStorage();
             const cartItemCountElement = document.getElementById('cartItemCount');
 
             if (cartItemCountElement) {
-                cartItemCountElement.textContent = cartFromLocalStorage.length;
+                const cartCount = cartData.items.reduce((total, item) => total + item.quantity, 0);
+                cartItemCountElement.textContent = cartCount;
             }
         }
 
