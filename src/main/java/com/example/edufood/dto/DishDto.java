@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class DishDto {
     private Long id;
-    private Long restaurant_id;
+    private RestaurantDto restaurant;
     private String name;
     private String description;
     private Double price;

@@ -165,7 +165,7 @@
                                     <p href="/resume/${dish.name}" class="card-title">${dish.name}</p>
                                     <p class="card-text resume-date">${dish.description}</p>
                                     <p class="card-text resume-date" style="color: #057ae0">${dish.price}</p>
-                                    <button class="btn btn-update" onclick="addToCart(${dish.id}, '${dish.name}', ${dish.price})">В корзину</button>
+                                    <button class="btn btn-update" onclick="addToCart(${dish.id}, '${dish.restaurant.name}', '${dish.name}', ${dish.price})">В корзину</button>
                                 </div>
                             </div>
                         </div>
@@ -217,36 +217,38 @@
 
         function loadCartFromLocalStorage() {
             const savedCart = localStorage.getItem('cart');
-            return savedCart ? JSON.parse(savedCart) : { items: [], totalPrice: 0 };
+            return savedCart ? JSON.parse(savedCart) : [];
         }
 
         function saveCartToLocalStorage(cart) {
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
-        let cart = loadCartFromLocalStorage();
+        let cartData = loadCartFromLocalStorage();
 
-        if (!cart) {
-            cart = [];
-            saveCartToLocalStorage(cart);
+
+        if (!cartData) {
+            cartData = [];
+            saveCartToLocalStorage(cartData);
         }
 
-        function addToCart(dishId, dishName, dishPrice) {
-            const existingCartItem = cart.find(item => item.dishId === dishId);
+        function addToCart(dishId, restaurant, dishName, dishPrice) {
+            const existingCartItem = cartData.find(item => item.dishId === dishId);
 
             if (existingCartItem) {
                 existingCartItem.quantity++;
             } else {
                 const newCartItem = {
                     dishId: dishId,
+                    restaurant: restaurant,
                     dishName: dishName,
                     price: parseFloat(dishPrice),
                     quantity: 1,
                 };
-                cart.push(newCartItem);
+                cartData.push(newCartItem);
             }
 
-            saveCartToLocalStorage(cart);
+            saveCartToLocalStorage(cartData);
             updateCartItemCount();
 
             showSuccessMessage()

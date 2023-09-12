@@ -34,6 +34,10 @@ public class RestaurantService {
                 .build();
     }
 
+    public RestaurantDto getRestaurantById(Long id){
+        return makeDto(repository.findById(id).get());
+    }
+
     public List<RestaurantDto> searchRestaurant(String search) {
         List<Restaurant> restaurants = repository.searchByNameContainingIgnoreCase(search);
 

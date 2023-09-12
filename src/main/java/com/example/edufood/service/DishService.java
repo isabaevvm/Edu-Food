@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DishService {
     private final DishRepository repository;
+    private final RestaurantService restaurantService;
 
     public Page<DishDto> getDishesByRestaurant(String name, int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
@@ -25,7 +26,7 @@ public class DishService {
     private DishDto makeDto(Dish dish) {
         return DishDto.builder()
                 .id(dish.getId())
-                .restaurant_id(dish.getRestaurant().getId())
+                .restaurant(restaurantService.getRestaurantById(dish.getRestaurant().getId()))
                 .name(dish.getName())
                 .description(dish.getDescription())
                 .price(dish.getPrice())
