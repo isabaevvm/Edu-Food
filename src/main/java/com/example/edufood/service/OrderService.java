@@ -40,8 +40,6 @@ public class OrderService {
             Order order = Order.builder()
                     .orderDate(LocalDateTime.now())
                     .user(customer)
-                    .dish(dishRepository.findById(o.getDishId()).orElseThrow(() -> new NoSuchElementException("dish not found")))
-                    .quantity(o.getQuantity())
                     .build();
 
             saveOrder(order);
