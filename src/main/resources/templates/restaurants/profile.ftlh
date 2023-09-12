@@ -191,7 +191,7 @@
             const url = new URL(currentUrl);
 
             url.searchParams.set('page', page);
-            url.searchParams.set('size', '5');
+            url.searchParams.set('size', '10');
 
             window.location.href = url.href;
         }
@@ -225,6 +225,8 @@
         }
 
         let cartData = loadCartFromLocalStorage();
+
+        updateCartItemCount()
 
         if (!cartData) {
             cartData = { items: [], totalPrice: 0 };

@@ -162,6 +162,24 @@
     </div>
     <script>
 
+        let cartData = loadCartFromLocalStorage();
+
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('cart');
+            return savedCart ? JSON.parse(savedCart) : { items: [], totalPrice: 0 };
+        }
+
+        updateCartItemCount();
+
+        function updateCartItemCount() {
+            const cartItemCountElement = document.getElementById('cartItemCount');
+
+            if (cartItemCountElement) {
+                const cartCount = cartData.items.reduce((total, item) => total + item.quantity, 0);
+                cartItemCountElement.textContent = cartCount;
+            }
+        }
+
         function readUser() {
             let userAsJson = localStorage.getItem('user')
             return JSON.parse(userAsJson)

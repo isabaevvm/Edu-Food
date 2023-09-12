@@ -18,19 +18,6 @@
             margin-left: 20px;
         }
 
-        .edit-profile {
-            color: #ffffff;
-            padding: 10px 0px;
-            width: 200px;
-            background-color: #057ae0;
-            box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1);
-            border: none;
-            border-radius: 10px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
-        }
-
         .card {
             background-color: #ffffff;
             color: #057ae0;
@@ -47,60 +34,6 @@
         .resume-date {
             margin-top: 6px;
             color: rgb(33, 32, 32);
-        }
-
-        .custom-button {
-            text-align: center;
-            width: 120px;
-            height: 150px;
-            border-radius: 15%;
-            box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            border: none;
-            font-size: 1px;
-            cursor: pointer;
-            margin-right: 25px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .custom-button:hover {
-            transform: scale(1.05);
-        }
-
-        .button-label {
-            font-size: 16px;
-            color: rgb(32, 32, 32);
-            margin-top: 6px;
-        }
-
-        .button-group {
-            margin-top: 40px;
-        }
-
-        .btn-update {
-            background-color: #057ae0;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 16px;
-        }
-
-        .btn-edit {
-            background-color: white;
-            color: #057ae0;
-            border-color: #057ae0;
-            border-radius: 5px;
-            padding: 8px 16px;
-            margin-left: 10px;
-            transition: background-color 0.1s ease-in-out;
-        }
-
-        .btn-edit:hover {
-            background-color: #057ae0;
-        }
-
-        .user-info{
-            margin-bottom: 3px;
         }
 
         .pagination-container {

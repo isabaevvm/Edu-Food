@@ -60,6 +60,7 @@
         </section>
     </div>
     <script>
+
         function loadCartFromLocalStorage() {
             const savedCart = localStorage.getItem('cart');
             const cartData = savedCart ? JSON.parse(savedCart) : {items: [], totalPrice: 0};
@@ -89,6 +90,14 @@
             const totalPriceElement = document.getElementById('totalPrice');
             const total = cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
             totalPriceElement.textContent = `Итого: ` + total + ` руб.`;
+
+            updateCartItemCount()
+
+            function updateCartItemCount() {
+                const cartItemCountElement = document.getElementById('cartItemCount');
+                const cartItemCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+                cartItemCountElement.textContent = cartItemCount.toString();
+            }
         }
 
 
