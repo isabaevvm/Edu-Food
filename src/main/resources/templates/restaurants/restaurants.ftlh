@@ -170,7 +170,7 @@
         let user = readUser()
 
         function goToPage(page) {
-            window.location.href = "/restaurants?page=" + page + "&size=5";
+            window.location.href = "/?page=" + page + "&size=5";
         }
 
 
