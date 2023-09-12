@@ -125,7 +125,7 @@
     <div class="container shadow-lg mt-5">
         <div class="dropdown">
             <div>
-                <input type="text" id="searchInput" placeholder="Поиск вакансий...">
+                <input type="text" id="searchInput" placeholder="Поиск заведении...">
             </div>
             <div id="searchResults">
                 <!-- Результаты поиска будут здесь -->
