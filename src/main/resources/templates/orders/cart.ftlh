@@ -94,13 +94,57 @@
 
         renderCartItems();
 
+        function readUser() {
+            let userAsJson = localStorage.getItem('user')
+            return JSON.parse(userAsJson)
+        }
+
         function payForOrder() {
+            const user = readUser();
 
-            alert('Заказ оплачен!');
+            if (!user) {
+                alert("перед оформлением заказа проходите регистрацию!")
+                window.location.href = '/login';
+                return;
+            }
 
-            cart = { items: [], totalPrice: 0 };
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCartItems();
+            const orderData = {
+                totalPrice: cart.totalPrice,
+                orders: cart.items.map(item => ({
+                    dishId: item.dishId,
+                    quantity: item.quantity
+                }))
+            };
+
+            const url = '/api/order';
+
+            let headers = new Headers()
+            headers.set('Authorization', 'Basic ' + btoa(user.username + ':' + user.password))
+            headers.set('Content-Type', 'application/json');
+
+            const requestOptions = {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(orderData)
+            };
+
+            fetch(url, requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка при выполнении запроса');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Заказ успешно оплачен:', data);
+
+                    cart = { items: [], totalPrice: 0 };
+                    localStorage.removeItem('cart');
+                    renderCartItems();
+                })
+                .catch(error => {
+                    console.error('Ошибка при оплате заказа:', error);
+                });
         }
 
     </script>

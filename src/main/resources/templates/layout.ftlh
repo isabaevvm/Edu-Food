@@ -98,15 +98,15 @@
             <span id="cartItemCount" class="cart-item-count">0</span>
         </a>
         <#if known>
-            <#if _csrf??>
-                <form action="/logout" method="post">
-                    <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
-                    value="${(_csrf.token)!'--no-token--'}"/>
-                    <button type="submit" class="nav-link" id="logout"><i class="fas fa-sign-out-alt"></i> Выход</button>
-                </form>
-            <#else>
+<#--            <#if _csrf??>-->
+<#--                <form action="/logout" method="post">-->
+<#--                    <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"-->
+<#--                    value="${(_csrf.token)!'--no-token--'}"/>-->
+<#--                    <button type="submit" class="nav-link" id="logout"><i class="fas fa-sign-out-alt"></i> Выход</button>-->
+<#--                </form>-->
+<#--            <#else>-->
                 <a href="/logout" class="nav-link"><i class="fas fa-sign-out-alt"></i> Выход</a>
-            </#if>
+<#--            </#if>-->
         <#else>
             <a href="/register" class="nav-link"><i class="fas fa-user-plus"></i> Регистрация</a>
             <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> Вход</a>

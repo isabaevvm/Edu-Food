@@ -1,7 +1,5 @@
 <#import "../layout.ftlh" as main>
 <@main.layout>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
-    <meta name="_csrf_token" content="${_csrf.token}"/>
     <style>
         .container {
             background-color: #ffffff;

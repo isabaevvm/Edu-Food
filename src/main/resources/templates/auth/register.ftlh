@@ -18,7 +18,7 @@
 						<div class="card-body p-5">
 							<h1 class="fs-4 card-title fw-bold mb-4">Регистрация</h1>
 							<form method="post" class="needs-validation" action="/register" >
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+<#--								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">E-Mail почта</label>
 									<input id="email" type="email" class="form-control" name="email"  required>
