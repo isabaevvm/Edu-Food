@@ -226,7 +226,7 @@
 
                 resultItem.classList.add("search-result");
                 resultUrl.textContent = restaurant.name;
-                resultUrl.href = "/restaurants/" + restaurant.id
+                resultUrl.href = "/" + restaurant.name
 
                 resultItem.appendChild(resultUrl)
                 searchResults.appendChild(resultItem);

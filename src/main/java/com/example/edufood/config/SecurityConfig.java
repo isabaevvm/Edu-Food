@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/**").permitAll()
                         .requestMatchers("/register").permitAll()
+                        .requestMatchers("/register").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/order").authenticated()
                         .requestMatchers("/api/restaurants/search/**").permitAll()
                         .anyRequest().authenticated());

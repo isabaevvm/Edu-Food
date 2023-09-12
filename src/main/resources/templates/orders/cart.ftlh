@@ -83,13 +83,18 @@
                 <td>` + item.price + `</td>
                 <td>` + item.quantity + `</td>
                 <td>` + item.price * item.quantity + `</td>
+                <td>
+                    <button class="btn btn-danger" onclick="removeCartItem(` + item.dishId + `)">
+                         <i class="fas fa-trash"></i> Удалить
+                    </button>
+                </td>
             </tr>
         `).join('');
             }
 
             const totalPriceElement = document.getElementById('totalPrice');
             const total = cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-            totalPriceElement.textContent = `Итого: ` + total + ` руб.`;
+            totalPriceElement.textContent = `Итого: ` + total;
 
             updateCartItemCount()
 
@@ -100,7 +105,13 @@
             }
         }
 
+        function calculateTotalPrice() {
+            return cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        }
 
+        function saveCartToLocalStorage(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
         renderCartItems();
 
         function readUser() {
@@ -108,9 +119,6 @@
             return JSON.parse(userAsJson)
         }
 
-        function calculateTotalPrice() {
-            return cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-        }
 
         function payForOrder() {
             const user = readUser();
@@ -121,7 +129,6 @@
                 return;
             }
 
-            const totalOrderPrice = calculateTotalPrice();
 
             const orderData = {
                 totalPrice: cart.totalPrice,
@@ -157,6 +164,25 @@
                     renderCartItems();
                 })
 
+        }
+
+        function updateCartItemCount() {
+            const cartItemCountElement = document.getElementById('cartItemCount');
+            const cartItemCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+            cartItemCountElement.textContent = cartItemCount.toString();
+        }
+
+        function removeCartItem(dishId) {
+            const index = cart.items.findIndex(item => item.dishId === dishId);
+
+            if (index !== -1) {
+                cart.items.splice(index, 1);
+                cart.totalPrice = calculateTotalPrice();
+
+                updateCartItemCount();
+                renderCartItems();
+                saveCartToLocalStorage(cart);
+            }
         }
 
     </script>
