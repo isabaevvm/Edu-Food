@@ -94,7 +94,9 @@
     <#assign known = SPRING_SECURITY_CONTEXT??>
     <nav class="nav text-center">
         <a href="/" class="nav-link"><i class="fas fa-home"></i> Главная</a>
-        <a href="/cart" class="nav-link"><i class="fas fa-shopping-cart"></i> Корзина</a>
+        <a href="/cart" class="nav-link"><i class="fas fa-shopping-cart"></i> Корзина
+            <span id="cartItemCount" class="cart-item-count">0</span>
+        </a>
         <#if known>
             <#if _csrf??>
                 <form action="/logout" method="post">

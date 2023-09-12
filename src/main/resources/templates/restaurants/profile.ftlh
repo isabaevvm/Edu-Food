@@ -125,6 +125,28 @@
             background-color: #06d6a0;
         }
 
+
+        .success-message {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .success-message.hidden {
+            display: none;
+        }
+
+        .success-message i {
+            margin-right: 5px;
+        }
+
     </style>
     <div class="container shadow-lg mt-5">
         <section>
@@ -159,6 +181,10 @@
             </div>
         </section>
     </div>
+    <div id="successMessage" class="success-message hidden">
+        <i class="fas fa-check-circle"></i>
+        <span>Блюдо успешно добавлено в корзину</span>
+    </div>
     <script>
         function goToPage(page) {
             const currentUrl = window.location.href;
@@ -191,7 +217,7 @@
 
         function loadCartFromLocalStorage() {
             const savedCart = localStorage.getItem('cart');
-            return savedCart ? JSON.parse(savedCart) : [];
+            return savedCart ? JSON.parse(savedCart) : { items: [], totalPrice: 0 };
         }
 
         function saveCartToLocalStorage(cart) {
@@ -214,14 +240,34 @@
                 const newCartItem = {
                     dishId: dishId,
                     dishName: dishName,
-                    price: dishPrice,
+                    price: parseFloat(dishPrice),
                     quantity: 1,
                 };
                 cart.push(newCartItem);
             }
 
             saveCartToLocalStorage(cart);
+            updateCartItemCount();
+
+            showSuccessMessage()
         }
 
+        function updateCartItemCount() {
+            const cartFromLocalStorage = loadCartFromLocalStorage();
+            const cartItemCountElement = document.getElementById('cartItemCount');
+
+            if (cartItemCountElement) {
+                cartItemCountElement.textContent = cartFromLocalStorage.length;
+            }
+        }
+
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.remove('hidden');
+
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 3000);
+        }
     </script>
 </@main.layout>
