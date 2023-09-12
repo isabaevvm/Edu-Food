@@ -10,5 +10,5 @@ public class DishDto {
     private RestaurantDto restaurant;
     private String name;
     private String description;
-    private Double price;
+    private Float price;
 }

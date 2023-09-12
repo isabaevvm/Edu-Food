@@ -38,7 +38,7 @@
             margin: 15px;
         }
 
-        .card-title {
+        .card-title{
             font-size: 19px;
             text-decoration: none;
             font-weight: bold;
@@ -99,7 +99,7 @@
             background-color: #057ae0;
         }
 
-        .user-info {
+        .user-info{
             margin-bottom: 3px;
         }
 
@@ -125,152 +125,66 @@
             background-color: #06d6a0;
         }
 
-
-        .success-message {
-            background-color: #4caf50;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .success-message.hidden {
-            display: none;
-        }
-
-        .success-message i {
-            margin-right: 5px;
-        }
-
     </style>
     <div class="container shadow-lg mt-5">
         <section>
             <div class="row mt-5 pt-5">
-                <div class="col mt-2">
-                    <h3 class="mb-3" style="color: rgb(32, 32, 32);">${restaurant.name}</h3>
-                </div>
+                    <h3 class="mb-3" style="color: rgb(32, 32, 32);">${user.email}</h3>
             </div>
             <div class="row mt-5">
-                <#if dishes?has_content>
-                    <#assign pageSize = dishes.getTotalPages()>
-                    <#list dishes.getContent() as dish>
+                    <#assign pageSize = orders.getTotalPages()>
+                    <div class="sort-container">
+                        <label for="sortSelect">Сортировать по:</label>
+                        <select id="sortSelect" onchange="updateSort()">
+                            <option value="totalPrice">По сумме</option>
+                            <option value="orderDate">По дате</option>
+                        </select>
+                    </div>
+                <#if orders.getContent()?has_content>
+                    <#list orders.getContent() as order>
                         <div class="col-md-12">
                             <div class="card shadow">
                                 <div class="card-body">
-                                    <p href="/resume/${dish.name}" class="card-title">${dish.name}</p>
-                                    <p class="card-text resume-date">${dish.description}</p>
-                                    <p class="card-text resume-date" style="color: #057ae0">${dish.price}</p>
-                                    <button class="btn btn-update" onclick="addToCart(${dish.id}, '${dish.restaurant.name}', '${dish.name}', ${dish.price})">В корзину</button>
+                                    <p class="card-title">${order.totalPrice}</p>
+                                    <#assign dateString = order.orderDate>
+                                    <#assign dateObject = dateString>
+
+                                    <p class="card-text resume-date">Дата заказа: ${dateObject}</p>
                                 </div>
                             </div>
                         </div>
                     </#list>
+                    <#else>
+                    <p>У вас нету сделанных заказов</p>
+                </#if>
                     <div class="pagination-container">
                         <#if 1 < pageSize>
-                            <#list 0..dishes.totalPages - 1 as pageIndex>
+                            <#list 0..orders.totalPages - 1 as pageIndex>
                                 <button class="page-button" onclick="goToPage(${pageIndex})">${pageIndex + 1}</button>
                             </#list>
                         </#if>
                     </div>
-                </#if>
             </div>
         </section>
     </div>
-    <div id="successMessage" class="success-message hidden">
-        <i class="fas fa-check-circle"></i>
-        <span>Блюдо успешно добавлено в корзину</span>
-    </div>
     <script>
         function goToPage(page) {
-            const currentUrl = window.location.href;
-            const url = new URL(currentUrl);
-
-            url.searchParams.set('page', page);
-            url.searchParams.set('size', '5');
-
-            window.location.href = url.href;
+            window.location.href = "/profile?page=" + page + "&size=5";
         }
 
         function updateSort() {
             const sortSelect = document.getElementById("sortSelect");
             const selectedSort = sortSelect.value;
-
             const currentUrl = window.location.href;
 
             const urlParts = currentUrl.split("?");
-
             let baseUrl = urlParts[0];
 
             const queryParams = new URLSearchParams(urlParts[1]);
-
             queryParams.set("sort", selectedSort);
 
             const newUrl = baseUrl + "?" + queryParams.toString();
-
             window.location.href = newUrl;
-        }
-
-        function loadCartFromLocalStorage() {
-            const savedCart = localStorage.getItem('cart');
-            return savedCart ? JSON.parse(savedCart) : { items: [], totalPrice: 0 };
-        }
-
-        function saveCartToLocalStorage(cart) {
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-
-        let cartData = loadCartFromLocalStorage();
-
-        if (!cartData) {
-            cartData = { items: [], totalPrice: 0 };
-            saveCartToLocalStorage(cartData);
-        }
-
-        function addToCart(dishId, restaurant, dishName, dishPrice) {
-            const existingCartItem = cartData.items.find(item => item.dishId === dishId);
-
-            if (existingCartItem) {
-                existingCartItem.quantity++;
-                cartData.totalPrice += dishPrice * 1
-            } else {
-                const newCartItem = {
-                    dishId: dishId,
-                    restaurant: restaurant,
-                    dishName: dishName,
-                    price: dishPrice,
-                    quantity: 1,
-                };
-                cartData.items.push(newCartItem);
-                cartData.totalPrice += dishPrice * 1;
-            }
-
-            saveCartToLocalStorage(cartData);
-            updateCartItemCount();
-
-            showSuccessMessage()
-        }
-
-        function updateCartItemCount() {
-            const cartItemCountElement = document.getElementById('cartItemCount');
-
-            if (cartItemCountElement) {
-                const cartCount = cartData.items.reduce((total, item) => total + item.quantity, 0);
-                cartItemCountElement.textContent = cartCount;
-            }
-        }
-
-        function showSuccessMessage() {
-            const successMessage = document.getElementById('successMessage');
-            successMessage.classList.remove('hidden');
-
-            setTimeout(() => {
-                successMessage.classList.add('hidden');
-            }, 3000);
         }
     </script>
 </@main.layout>

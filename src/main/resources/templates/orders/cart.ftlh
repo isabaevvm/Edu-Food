@@ -99,6 +99,10 @@
             return JSON.parse(userAsJson)
         }
 
+        function calculateTotalPrice() {
+            return cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        }
+
         function payForOrder() {
             const user = readUser();
 
@@ -107,6 +111,8 @@
                 window.location.href = '/login';
                 return;
             }
+
+            const totalOrderPrice = calculateTotalPrice();
 
             const orderData = {
                 totalPrice: cart.totalPrice,

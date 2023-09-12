@@ -157,15 +157,3 @@ VALUES (10, 'Sushi Boat', 'Assortment of sushi and sashimi on a wooden boat plat
        (10, 'Green Tea Ice Cream', 'Japanese green tea-flavored ice cream', 6.99),
        (10, 'Rainbow Roll', 'Colorful sushi roll with assorted sashimi on top', 19.99),
        (10, 'Sake', 'Japanese rice wine', 8.99);
-
-INSERT INTO orders (user_id, order_date)
-VALUES (1, '2023-09-09 12:00:00'),
-       (2, '2023-09-08 14:30:00'),
-       (3, '2023-09-07 10:15:00'),
-       (1, '2023-09-06 19:45:00'),
-       (2, '2023-09-05 17:30:00'),
-       (3, '2023-09-04 15:20:00'),
-       (1, '2023-09-03 11:10:00'),
-       (2, '2023-09-02 16:55:00'),
-       (3, '2023-09-01 13:40:00'),
-       (1, '2023-08-31 18:25:00');

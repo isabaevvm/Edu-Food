@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -20,5 +22,10 @@ public class UserService {
                 .build();
 
         repository.save(user);
+    }
+
+    public UserDto getUserByEmail(String email) {
+        User user = repository.findUserByEmail(email).orElseThrow(() -> new NoSuchElementException("user not found"));
+        return UserDto.builder().id(user.getId()).email(user.getEmail()).build();
     }
 }

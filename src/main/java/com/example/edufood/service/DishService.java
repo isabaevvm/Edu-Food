@@ -4,6 +4,7 @@ import com.example.edufood.dto.DishDto;
 import com.example.edufood.model.Dish;
 import com.example.edufood.repository.DishRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DishService {
     private final DishRepository repository;
     private final RestaurantService restaurantService;
