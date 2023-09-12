@@ -62,7 +62,7 @@
     <script>
         function loadCartFromLocalStorage() {
             const savedCart = localStorage.getItem('cart');
-            const cartData = savedCart ? JSON.parse(savedCart) : { items: [], totalPrice: 0 };
+            const cartData = savedCart ? JSON.parse(savedCart) : {items: [], totalPrice: 0};
 
             return cartData;
         }
@@ -75,7 +75,7 @@
             if (cart.items.length === 0) {
                 cartItemsElement.innerHTML = '<tr><td colspan="4">Корзина пуста</td></tr>';
             } else {
-                cartItemsElement.innerHTML = cart.items.map(item =>  `
+                cartItemsElement.innerHTML = cart.items.map(item => `
             <tr>
                 <td>` + item.dishName + `</td>
                 <td>` + item.restaurant + `</td>
@@ -133,18 +133,15 @@
                     if (!response.ok) {
                         throw new Error('Ошибка при выполнении запроса');
                     }
-                    return response.json();
                 })
                 .then(data => {
                     console.log('Заказ успешно оплачен:', data);
 
-                    cart = { items: [], totalPrice: 0 };
+                    cart = {items: [], totalPrice: 0};
                     localStorage.removeItem('cart');
                     renderCartItems();
                 })
-                .catch(error => {
-                    console.error('Ошибка при оплате заказа:', error);
-                });
+
         }
 
     </script>
